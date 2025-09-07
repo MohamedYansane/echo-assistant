@@ -1,6 +1,7 @@
 const TestPage = () => {
-    return (  <div className="">This is a test Page</div>
-    );
+    return ( <div className="">
+        Only authorized user and user with organization can see me!
+    </div> );
 }
  
 export default TestPage;
