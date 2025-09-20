@@ -5,7 +5,7 @@ import { ConvexProviderWithClerk } from "convex/react-clerk";
 
 import { useAuth } from "@clerk/nextjs";
 import * as React from "react"
-import { ThemeProvider as NextThemesProvider } from "next-themes"
+
 
 
 if (!process.env.NEXT_PUBLIC_CONVEX_URL) {

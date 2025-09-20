@@ -14,7 +14,7 @@ export const useVapi = ()=>{
 
     useEffect(()=>{
         //here we r addin the public key from the vapi dashboard normally each customer must add their own vapi id to be able to use the voice assistant. they have to configure as we did with assistant yansane by following all the step etc...
-        const vapiInstance = new Vapi("0f1b9220-9ec3-4613-8b7a-b0f45b425fc9");
+        const vapiInstance = new Vapi(process.env.NEXT_PUBLIC_VAPI_API_KEY as string);
         setVapi(vapiInstance);
 
         vapiInstance.on("call-start", ()=>{
