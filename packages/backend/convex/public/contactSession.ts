@@ -1,13 +1,13 @@
-import { defineSchema } from "convex/server";
-import { defineTable } from "convex/server";
 import { v } from "convex/values";
+import { mutation } from "../_generated/server";
+const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds   
 
-export default defineSchema({
-  contactSessions: defineTable({
+
+export const create = mutation({
+  args: {
     name: v.string(),
     email: v.string(),
     organizationId: v.string(),
-    expiresAt: v.number(),
     metaData: v.optional(
       v.object({
         userAgent: v.optional(v.string()),
@@ -24,8 +24,16 @@ export default defineSchema({
         currentUrl: v.optional(v.string()),
       })
     ),
-  }).index("by_organization_id", ["organizationId"]).index("by_expires_at", ["expiresAt"]),
-  users: defineTable({
-    name: v.string(),
-  }),
-});
+  },handler:async(ctx, args) =>{
+    const expiresAt = Date.now() + SESSION_DURATION_MS;
+    const contactSessionId = await ctx.db.insert("contactSessions", {
+      name: args.name,
+      email: args.email,
+      organizationId: args.organizationId,
+      expiresAt,
+      metaData: args.metaData,
+    });
+    //on renvoie lid de la session pour la stocker en localstorage et c'est ca meme qu'il retournera le backend pour identifier le user
+    return contactSessionId;
+  }
+}); 
