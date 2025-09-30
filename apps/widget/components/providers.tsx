@@ -3,6 +3,7 @@
 import * as React from "react"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { ConvexProvider, ConvexReactClient } from "convex/react"
+import { Provider } from "jotai";
 
 export function Providers({ children }: { children: React.ReactNode }) {
 
@@ -13,7 +14,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ConvexProvider
       client={client}
     >
+    <Provider>
       {children}
+    </Provider>
     </ConvexProvider>
   )
 }
